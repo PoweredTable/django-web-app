@@ -1,0 +1,78 @@
+## INICIAR UM PROJETO DJANGO ##
+    django-admin startproject *project_name*
+###--
+
+## INICIAR O SERVIDOR
+    python manage.py runserver
+###--
+
+## CRIAR UM APP
+    python manage.py startapp *app_name*
+###--
+
+## DJANGO TEMPLATES
+    In order to make use of templates, a.k.a. make use
+    of HTML files, django requires you to follow a directory convention
+    structure to identify and make use of .html files in the views.py file.
+
+    *project_name* -> *app_name* -> templates -> *app_name* -> *.html
+###--
+
+## INSTALLING APPS
+    Django searches for templates and databases at *project_name* -> *app_name* -> settings.py,
+    where the list 'INSTALLED_APPS' contains what django searches for.
+
+    Every time you create a new app, in order to use a template, you'll have to add the app there manually.
+###--
+
+## TEMPLATES INHERITANCE
+    Just like a class inheritance, where you can overwrite any parent's function,
+    a template inheritance although allows you to overwrite a specific 'block area'.
+
+    The following example shows a 'base.html', our parent template, and two child
+    templates which are inheriting from 'base.html'.
+
+    Both 'child1.html' and 'child2.html' will inherit <html lang='pt-br'> </html>
+
+    -> *app_name*/base.html
+    <html lang='pt-br'>
+        {% block *block_name* %}
+        {% endblock *block_name* %}
+    </html>
+
+    -> *app_name*/child1.html
+    {% extends "*app_name*/base.html" %}
+
+    {% block *block_name* %}
+        <h1>=== Unique text for child1.html ===</h1>
+    {% endblock *block_name* %}
+
+    -> *app_name*/child2.html
+    {% extends "*app_name*/base.html" %}
+
+    {% block *block_name* %}
+        <h1>### Unique text for child2.html ###</h1>
+    {% endblock *block_name* %}
+###--
+
+## TEMPLATES CAN BE REFERRED EVERYWHERE
+    Even if your 'base.html' file belongs to another app (directory) you can still inherit it
+###--
+
+## DYNAMIC HREF WHEN ROUTING
+    Avoid using hardcoded HREF, if the url to a specific page changes, then
+    you would have to change every hardcoded HREF, instead do like the following example:
+
+    <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
+    <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
+
+    Pay attention to the values in href, instead of a full url string,
+    it's actually using the name of an url previously defined.
+
+    urlpatterns = [
+                path('', views.home, name='blog-home'),
+                path("about/", views.about, name="blog-about")
+                ]
+###--
+
+
